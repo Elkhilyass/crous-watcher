@@ -5,6 +5,9 @@ on:
     - cron: "*/10 * * * *"   # toutes les 10 minutes
   workflow_dispatch:         # exécution manuelle si tu veux tester
 
+permissions:
+  contents: write   # <=== IMPORTANT
+  
 jobs:
   run-script:
     runs-on: ubuntu-latest
