@@ -25,12 +25,15 @@ STATE_FILE = "known_accommodations.json"
 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 465
+
 SMTP_USER = os.getenv("SMTP_USER")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD") # pas ton vrai mdp, mais un mot de passe applicatif
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+EMAIL_TO = os.getenv("EMAIL_TO")
+
+if not SMTP_USER or not SMTP_PASSWORD or not EMAIL_TO:
+    raise RuntimeError("Variables d'environnement SMTP_USER / SMTP_PASSWORD / EMAIL_TO manquantes")
 
 EMAIL_FROM = SMTP_USER
-SMTP_USER = "ilyaselkhazane2003@gmail.com"
-EMAIL_TO = os.getenv("EMAIL_TO")
 
 # =====================================================
 
