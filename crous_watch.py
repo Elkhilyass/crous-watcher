@@ -25,12 +25,12 @@ STATE_FILE = "known_accommodations.json"
 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 465
-SMTP_USER = "ilyaselkhazane2003@gmail.com"
-SMTP_PASSWORD = "itfl cdqx scrs xwnw"  # pas ton vrai mdp, mais un mot de passe applicatif
+SMTP_USER = os.getenv("SMTP_USER")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD") # pas ton vrai mdp, mais un mot de passe applicatif
 
 EMAIL_FROM = SMTP_USER
 SMTP_USER = "ilyaselkhazane2003@gmail.com"
-EMAIL_TO = "ilyaselkhazane2003@gmail.com"
+EMAIL_TO = os.getenv("EMAIL_TO")
 
 # =====================================================
 
