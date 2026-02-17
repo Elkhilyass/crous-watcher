@@ -2,7 +2,7 @@
 
 > Un script Python automatisé qui surveille les logements disponibles sur [trouverunlogement.lescrous.fr](https://trouverunlogement.lescrous.fr) et envoie un email dès qu'un **nouveau logement apparaît** dans les zones surveillées.
 
-Le script s'exécute automatiquement **toutes les 10 minutes** via **GitHub Actions** — même si votre PC est éteint.
+Le script s'exécute automatiquement **toutes les 5 minutes** via **GitHub Actions** — même si votre PC est éteint.
 
 ---
 
@@ -175,16 +175,6 @@ Cela évite les doublons et garantit que vous ne recevez des alertes que pour le
 
 - Dépend de la structure HTML du site CROUS
 - Si le site modifie son code HTML, les sélecteurs CSS devront être adaptés dans le script
-
----
-
-## 💡 Améliorations possibles
-
-- [ ] Notification via **Telegram**
-- [ ] Notification via **Slack** ou **Discord**
-- [ ] Filtrage par **prix maximum**
-- [ ] Stockage sur base de données
-- [ ] Dockerisation complète
 
 ---
 
