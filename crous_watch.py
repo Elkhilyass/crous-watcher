@@ -153,10 +153,11 @@ def main():
         lines.append(f"URL : {url}")
         for a in accs:
             total_new += 1
+            full_url = "https://trouverunlogement.lescrous.fr" + a["href"]  # ← ajoute ça
             if a["price"]:
-                lines.append(f"- {a['name']} ({a['price']})")
+                lines.append(f"- {a['name']} ({a['price']}) → {full_url}")  # ← modifie ça
             else:
-                lines.append(f"- {a['name']}")
+                lines.append(f"- {a['name']} → {full_url}") ['name']}")
         lines.append("")
 
     if total_new == 0:
