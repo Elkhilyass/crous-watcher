@@ -1,187 +1,199 @@
 # 🏠 CROUS Watcher – Alertes Automatiques Logements CROUS
 
-Un script Python automatisé qui surveille les logements disponibles sur le site  
-https://trouverunlogement.lescrous.fr
+> Un script Python automatisé qui surveille les logements disponibles sur [trouverunlogement.lescrous.fr](https://trouverunlogement.lescrous.fr) et envoie un email dès qu'un **nouveau logement apparaît** dans les zones surveillées.
 
-Il envoie un email uniquement lorsqu’un **nouveau logement apparaît** dans les zones surveillées.
-
-Le script est exécuté automatiquement toutes les 10 minutes via **GitHub Actions**.
+Le script s'exécute automatiquement **toutes les 10 minutes** via **GitHub Actions** — même si votre PC est éteint.
 
 ---
 
-# 🚀 Fonctionnalités
+## 🚀 Fonctionnalités
 
-- Surveillance de plusieurs zones (Nanterre, Paris, Versailles, etc.)
-- Détection uniquement des **nouveaux logements**
-- Envoi automatique d’email
-- Exécution 24h/24 même si votre PC est éteint
-- Persistance de l’état entre chaque exécution
-- 100% gratuit (GitHub Actions)
+- 🔍 Surveillance de plusieurs zones simultanément (Nanterre, Paris, Versailles, etc.)
+- 🆕 Détection uniquement des **nouveaux logements**
+- 📧 Envoi automatique d'email à chaque nouvelle annonce
+- ⏰ Exécution **24h/24** sans PC allumé
+- 💾 Persistance de l'état entre chaque exécution
+- 💸 **100% gratuit** via GitHub Actions
 
 ---
 
-# 📦 Structure du Projet
+## 📦 Structure du Projet
 
+```
 .
 ├── crous_watch.py
 ├── requirements.txt
 ├── known_accommodations.json
 └── .github/
-└── workflows/
-└── run.yml
-
+    └── workflows/
+        └── run.yml
+```
 
 ---
 
-# ⚙️ Installation
+## ⚙️ Installation
 
-## 1️⃣ Cloner le projet
+### 1️⃣ Cloner le projet
 
+```bash
 git clone https://github.com/Elkhilyass/crous-watcher.git
 cd crous-watcher
-##2️⃣ Installer les dépendances (optionnel si usage GitHub Actions uniquement)
+```
+
+### 2️⃣ Installer les dépendances
+
+> *(Optionnel si vous utilisez uniquement GitHub Actions)*
+
+```bash
 pip install -r requirements.txt
-🔐 Configuration Email (IMPORTANT)
-Le projet utilise Gmail SMTP.
+```
 
-Étape 1 – Activer la double authentification (2FA)
+---
+
+## 🔐 Configuration Email
+
+Le projet utilise **Gmail SMTP**. Suivez les étapes ci-dessous.
+
+### Étape 1 – Activer la double authentification (2FA)
+
 Dans votre compte Google :
+→ **Sécurité** → **Vérification en 2 étapes** → Activer
 
-Activer la vérification en 2 étapes
+### Étape 2 – Créer un mot de passe d'application
 
-Étape 2 – Créer un mot de passe d’application
-Aller dans Sécurité → Mots de passe d’application
+→ **Sécurité** → **Mots de passe d'application**  
+→ Générer un mot de passe pour **"Mail"**  
+→ Copier la clé générée (16 caractères)
 
-Générer un mot de passe pour "Mail"
+---
 
-Copier la clé générée
+## 🔑 Configuration des GitHub Secrets
 
-🔑 Configuration GitHub Secrets
-Dans votre dépôt GitHub :
+Dans votre dépôt GitHub :  
+**Settings → Secrets and variables → Actions → New repository secret**
 
-Settings → Secrets and variables → Actions → New repository secret
+Ajoutez les 3 secrets suivants :
 
-Ajouter les 3 secrets suivants :
+| Nom | Valeur |
+|-----|--------|
+| `SMTP_USER` | `votre_email@gmail.com` |
+| `SMTP_PASSWORD` | `mot_de_passe_d_application` |
+| `EMAIL_TO` | `email_qui_reçoit_les_alertes` |
 
-Name	Value
-SMTP_USER	votre_email@gmail.com
-SMTP_PASSWORD	mot_de_passe_d_application
-EMAIL_TO	email_qui_reçoit_les_alertes
-⚠️ Ne pas mettre de guillemets ni de "=" dans les noms.
+> ⚠️ Ne pas mettre de guillemets ni de `=` dans les noms des secrets.
 
-⏰ Automatisation avec GitHub Actions
-Le fichier :
+---
 
-.github/workflows/run.yml
-déclenche :
+## ⏰ Automatisation avec GitHub Actions
 
-une exécution toutes les 5 minutes
+Le fichier `.github/workflows/run.yml` déclenche :
 
-ou manuellement via "Run workflow"
+- ✅ Une exécution **toutes les 10 minutes**
+- ✅ Ou **manuellement** via *"Run workflow"* dans l'onglet Actions
 
-Le workflow :
+À chaque exécution, le workflow :
 
-Lance une VM Ubuntu
+1. Lance une VM Ubuntu
+2. Installe Python et les dépendances
+3. Exécute le script de surveillance
+4. Met à jour `known_accommodations.json`
+5. **Commit automatiquement** si un changement est détecté
 
-Installe Python
+---
 
-Installe les dépendances
+## 🌍 Adapter à une autre ville
 
-Exécute le script
+Pour surveiller une autre ville, modifiez la liste `URLS` dans `crous_watch.py` :
 
-Met à jour known_accommodations.json
-
-Commit automatiquement si changement
-
-🌍 Adapter à une autre ville
-
-Si vous recherchez un logement dans une autre ville, il suffit de modifier les URLs dans crous_watch.py.
-
-Dans le fichier :
-
+```python
 URLS = [
     "URL_1",
     "URL_2",
 ]
+```
 
+**Comment trouver les bonnes URLs :**
 
-Remplacez les liens actuels par les URLs correspondant à la ville (ou aux villes proches) que vous souhaitez surveiller.
+1. Aller sur [trouverunlogement.lescrous.fr](https://trouverunlogement.lescrous.fr)
+2. Filtrer par ville souhaitée
+3. Copier l'URL générée dans la barre d'adresse
+4. La coller dans la liste `URLS`
 
-📌 Exemple – Pour Lyon :
+### 📌 Exemple – Pour Lyon
 
-Vous pouvez surveiller :
+Vous pouvez surveiller plusieurs communes voisines pour maximiser vos chances :
 
-Lyon
+- Lyon
+- Villeurbanne
+- Bron
+- Vénissieux
 
-Villeurbanne
+> 💡 **Conseil :** surveiller les communes voisines augmente fortement les opportunités disponibles.
 
-Bron
+---
 
-Vénissieux
+## 🧠 Comment fonctionne la détection ?
 
-Aller sur https://trouverunlogement.lescrous.fr
+```
+1. Le script scrape les logements disponibles sur chaque URL
+2. Il extrait : nom, prix, et identifiant unique de chaque logement
+3. Il compare avec le fichier known_accommodations.json
+4. Si un logement est nouveau → email envoyé immédiatement
+5. Sinon → aucune notification
+```
 
-Filtrer par ville
+---
 
-Copier l’URL générée
+## 🧪 Lancer manuellement
 
-La coller dans la liste URLS
+Dans GitHub :  
+**Actions → CROUS Watcher → Run workflow**
 
-Vous pouvez ajouter plusieurs villes pour maximiser vos chances.
+---
 
-⚠️ Conseil : surveiller aussi les communes voisines augmente fortement les opportunités disponibles.
+## 📜 Logs & Debug
 
-🧠 Comment fonctionne la détection ?
-Le script extrait :
+Les logs sont visibles dans :  
+**Actions → sélectionner un Run → run-script → Run script**
 
-nom du logement
+Tous les `print()` du script y apparaissent en temps réel.
 
-prix (si disponible)
+---
 
-identifiant unique
+## 💾 Persistance des données
 
-Compare avec known_accommodations.json
+Le fichier `known_accommodations.json` est automatiquement :
 
-Si nouveau logement détecté → email envoyé
+- mis à jour à chaque exécution
+- **commit dans le repo** pour conserver l'état entre les runs
 
-Sinon → aucune notification
+Cela évite les doublons et garantit que vous ne recevez des alertes que pour les **vraies nouveautés**.
 
-🧪 Lancer manuellement
-Dans GitHub :
+---
 
-Actions → CROUS Watcher → Run workflow
+## ⚠️ Limitations
 
-📜 Logs & Debug
-Les print() sont visibles dans :
+- Dépend de la structure HTML du site CROUS
+- Si le site modifie son code HTML, les sélecteurs CSS devront être adaptés dans le script
 
-Actions → Run → run-script → Run script
+---
 
-📌 Persistance des données
-Le fichier :
+## 💡 Améliorations possibles
 
-known_accommodations.json
-est automatiquement mis à jour et commit dans le repo
-pour conserver l’état entre chaque exécution.
+- [ ] Notification via **Telegram**
+- [ ] Notification via **Slack** ou **Discord**
+- [ ] Filtrage par **prix maximum**
+- [ ] Stockage sur base de données
+- [ ] Dockerisation complète
 
-⚠️ Limitations
-Dépend de la structure HTML du site CROUS
+---
 
-Si le site change son code HTML, les sélecteurs devront être adaptés
+## 🎯 Résultat
 
-💡 Améliorations possibles
-Notification Telegram
+Vous recevez un email dès qu'un nouveau logement apparaît dans les zones surveillées — sans rien faire de votre côté.
 
-Filtrage par prix max
+---
 
-Ajout de Slack/Discord
+## 📄 Licence
 
-Stockage sur base de données
-
-Dockerisation complète
-
-🎯 Résultat
-Vous recevez un email dès qu’un nouveau logement apparaît
-dans les zones surveillées.
-
-📄 Licence
-Usage personnel et éducatif.
+Usage **personnel et éducatif** uniquement.
