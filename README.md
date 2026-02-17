@@ -149,6 +149,7 @@ Vous pouvez surveiller plusieurs communes voisines pour maximiser vos chances :
 Dans GitHub :  
 **Actions → CROUS Watcher → Run workflow**
 
+- **Première exécution** : au premier lancement, le script enverra un email avec **tous** les logements actuellement disponibles (ainsi tu sais que le code fonctionne.). Les exécutions suivantes ne notifieront que les vraies nouveautés.
 ---
 
 ## 📜 Logs & Debug
@@ -176,17 +177,6 @@ Cela évite les doublons et garantit que vous ne recevez des alertes que pour le
 - Dépend de la structure HTML du site CROUS
 - Si le site modifie son code HTML, les sélecteurs CSS devront être adaptés dans le script
 - **GitHub Actions** : les runs schedulés peuvent avoir un délai de 10-15 minutes en période de forte charge (c'est normal, GitHub ne garantit pas l'exécution exacte à la minute près)
-- **Première exécution** : au premier lancement, le script enverra un email avec **tous** les logements actuellement disponibles (car il ne sait pas encore ce qui est "nouveau"). Les exécutions suivantes ne notifieront que les vraies nouveautés.
-
----
-
-## 💡 Améliorations possibles
-
-- [ ] Notification via **Telegram**
-- [ ] Notification via **Slack** ou **Discord**
-- [ ] Filtrage par **prix maximum**
-- [ ] Stockage sur base de données
-- [ ] Dockerisation complète
 
 ---
 
