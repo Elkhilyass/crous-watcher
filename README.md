@@ -39,7 +39,7 @@ Le script est exécuté automatiquement toutes les 10 minutes via **GitHub Actio
 
 git clone https://github.com/Elkhilyass/crous-watcher.git
 cd crous-watcher
-2️⃣ Installer les dépendances (optionnel si usage GitHub Actions uniquement)
+##2️⃣ Installer les dépendances (optionnel si usage GitHub Actions uniquement)
 pip install -r requirements.txt
 🔐 Configuration Email (IMPORTANT)
 Le projet utilise Gmail SMTP.
@@ -75,7 +75,7 @@ Le fichier :
 .github/workflows/run.yml
 déclenche :
 
-une exécution toutes les 10 minutes
+une exécution toutes les 5 minutes
 
 ou manuellement via "Run workflow"
 
@@ -93,20 +93,43 @@ Met à jour known_accommodations.json
 
 Commit automatiquement si changement
 
-📍 Modifier les zones surveillées
-Dans crous_watch.py, modifier :
+🌍 Adapter à une autre ville
+
+Si vous recherchez un logement dans une autre ville, il suffit de modifier les URLs dans crous_watch.py.
+
+Dans le fichier :
 
 URLS = [
     "URL_1",
     "URL_2",
 ]
-Pour obtenir une URL :
+
+
+Remplacez les liens actuels par les URLs correspondant à la ville (ou aux villes proches) que vous souhaitez surveiller.
+
+📌 Exemple – Pour Lyon :
+
+Vous pouvez surveiller :
+
+Lyon
+
+Villeurbanne
+
+Bron
+
+Vénissieux
 
 Aller sur https://trouverunlogement.lescrous.fr
 
 Filtrer par ville
 
-Copier l’URL de la recherche
+Copier l’URL générée
+
+La coller dans la liste URLS
+
+Vous pouvez ajouter plusieurs villes pour maximiser vos chances.
+
+⚠️ Conseil : surveiller aussi les communes voisines augmente fortement les opportunités disponibles.
 
 🧠 Comment fonctionne la détection ?
 Le script extrait :
