@@ -153,12 +153,11 @@ def main():
         lines.append(f"URL : {url}")
         for a in accs:
             total_new += 1
-            full_url = "https://trouverunlogement.lescrous.fr" + a["href"]  # ← ajoute ça
+            full_url = "https://trouverunlogement.lescrous.fr" + a["href"]
             if a["price"]:
-                lines.append(f"- {a['name']} ({a['price']}) → {full_url}")  # ← modifie ça
+                lines.append(f"- {a['name']} ({a['price']}) → {full_url}")
             else:
-                lines.append(f"- {a['name']} → {full_url}") ['name']}")
-        lines.append("")
+                lines.append(f"- {a['name']} → {full_url}")
 
     if total_new == 0:
         print("Pas de nouveaux logements après filtrage, pas de mail.")
