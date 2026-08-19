@@ -5,6 +5,7 @@ import os
 import smtplib
 import ssl
 from email.message import EmailMessage
+import time
 
 # ================== À PERSONNALISER ==================
 
@@ -123,7 +124,11 @@ def main():
             accs = parse_accommodations(html)
         except Exception as e:
             print(f"  ⚠️ Erreur sur cette URL, on l'ignore : {e}")
+            print(f"::warning::Échec sur {url} → {e}")
+            failed_urls.append((url, str(e)))
             continue
+        
+        time.sleep(1)
 
         known_ids = set(state.get(url, []))
         current_ids = {a["id"] for a in accs}
