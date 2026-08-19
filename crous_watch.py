@@ -37,8 +37,14 @@ EMAIL_FROM = SMTP_USER
 # =====================================================
 
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
+}
+
 def fetch_html(url: str) -> str:
-    resp = requests.get(url, timeout=20)
+    resp = requests.get(url, headers=HEADERS, timeout=20)
     resp.encoding = "utf-8"
     resp.raise_for_status()
     return resp.text
@@ -112,8 +118,12 @@ def main():
 
     for url in URLS:
         print(f"Check URL: {url}")
-        html = fetch_html(url)
-        accs = parse_accommodations(html)
+        try:
+            html = fetch_html(url)
+            accs = parse_accommodations(html)
+        except Exception as e:
+            print(f"  ⚠️ Erreur sur cette URL, on l'ignore : {e}")
+            continue
 
         known_ids = set(state.get(url, []))
         current_ids = {a["id"] for a in accs}
