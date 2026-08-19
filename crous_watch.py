@@ -116,6 +116,8 @@ def main():
     state = load_state(STATE_FILE)  # {url: [id1, id2, ...]}
 
     all_new = []  # pour construire le mail final
+    
+    failed_urls = []   # ← cette ligne manquait
 
     for url in URLS:
         print(f"Check URL: {url}")
